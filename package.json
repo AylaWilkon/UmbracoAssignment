@@ -1,0 +1,15 @@
+{
+  "name": "umbraco-assignment",
+  "version": "1.0.0",
+  "description": "Umbraco Assignment with Tailwind CSS",
+  "scripts": {
+    "dev": "tailwindcss -i ./wwwroot/css/style.css -o ./wwwroot/css/style.css --watch",
+    "build": "tailwindcss -i ./wwwroot/css/style.css -o ./wwwroot/css/style.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47"
+  }
+}
+

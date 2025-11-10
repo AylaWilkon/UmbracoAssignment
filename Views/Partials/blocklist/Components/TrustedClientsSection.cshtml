@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    var content = (ContentModels.TrustedClientsSection)Model.Content;
+}
+
+<section class="py-16 relative">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col items-center text-center relative" style="min-height: 540px;">
+        @if (content.ClientBgMap != null)
+        {
+            <div class="absolute opacity-10" style="top: 0; left: 50%; transform: translateX(-50%); width: 1170px; height: 540px; background-image: url('@content.ClientBgMap.Url()'); background-repeat: no-repeat; background-position: center; background-size: cover; pointer-events: none; z-index: 0;"></div>
+        }
+        <div class="relative z-10 w-full flex flex-col items-center">
+
+        @* Label *@
+        @if (!string.IsNullOrWhiteSpace(content.TrustedClientLabel))
+        {
+            <p class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--clr-secondary)] mb-6">
+                @content.TrustedClientLabel
+            </p>
+        }
+
+        @* Titel *@
+        @if (content.TrustedSectionTitle != null)
+        {
+            <div class="rte mb-12">
+                @Html.Raw(content.TrustedSectionTitle)
+            </div>
+        }
+
+        @* Beskrivning *@
+        @if (content.ClientSectionDescription != null)
+        {
+            <div class="rte text-[var(--clr-body-text-100)] mb-10" style="width: 770px;">
+                @Html.Raw(content.ClientSectionDescription)
+            </div>
+        }
+
+        @* Knappt text – behöver inte fungera *@
+        @if (!string.IsNullOrWhiteSpace(content.ClientStoryButton))
+        {
+            <a href="/about"
+               class="inline-block px-10 py-3 bg-[var(--clr-primary)] text-[var(--clr-neutral)] font-semibold rounded no-underline">
+                @content.ClientStoryButton
+            </a>
+        }
+        </div>
+    </div>
+
+    @* Bakgrundsbilden med människorna längst ner *@
+    @if (content.ClientBgImage != null)
+    {
+        <div class="flex justify-center relative z-20" style="margin-top: -100px;">
+            <img src="@content.ClientBgImage.Url()" alt="Trusted clients"
+                 style="width: 1170px; height: 445px; object-fit: cover;" />
+        </div>
+    }
+</section>

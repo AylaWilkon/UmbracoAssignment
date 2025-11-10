@@ -4,6 +4,7 @@
     var content = (ContentModels.ServiceSection)Model.Content;
     var settings = Model.Settings as ContentModels.ServiceSettings;
     var sectionColor = settings?.ServiceBgColor?.Color ?? "#ffffff";
+    var services = content.ServiceList;
 }
 
 <section class="py-[4rem] bg-[@sectionColor]">
@@ -12,20 +13,28 @@
 
             @if (settings!.ShowServiceLabel)
             {
-                <h2 class="text-[-875rem] text-[var(--clr-secondary]) font-bold uppercase">@content.ServiceLabel</h2>  
+                <h2 class="text-[-875rem] text-[var(--clr-secondary]) font-bold uppercase">@content.ServiceLabel</h2>
             }
-            
+
             <div class="rte">@Html.Raw(content.ServiceTitle)</div>
         </div>
-
         <div class="mt-5 grid grid-cols-3 gap-4">
-            <div class="bg-[var(--clr-neutral)] border-2 border-[var(--clr-white-100)] w-full min-h-[350px] overflow-hidden">
-                <a href="#" class="block no-underline">
-                    <h4 class="p-[1.5rem] font-semibold text-[var(--clr-primary)]">Risk Management</h4>
-                    <img src="~/images/Risk-Management.svg" class="block w-full h-[220px] object-cover" />
-                    <p class="text-sm p-[1.5rem]">Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non </p>
-                </a>
-            </div>
+            @if (services != null)
+            {
+                foreach (var item in services)
+                {
+                    var service = (ContentModels.ServiceCard)item.Content;
+                    <div class="bg-[var(--clr-neutral)] border-2 border-[var(--clr-white-100)] w-full min-h-[350px] overflow-hidden">
+                        <a href="#" class="block no-underline">
+                            <h4 class="p-[1.5rem] font-semibold text-[var(--clr-primary)]">
+                                @service.CardTitle
+                            </h4>
+                            <img src="@service.ServiceImage?.Url()" alt="@service.ServiceImage" class="block w-full h-[220px] object-cover" />
+                            <p class="text-sm p-[1.5rem]">@service.ServiceDescription</p>
+                        </a>
+                    </div>
+                }
+            }
         </div>
     </div>
 </section>

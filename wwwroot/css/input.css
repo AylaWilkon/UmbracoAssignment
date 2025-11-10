@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Global H2-style */
+    h2,
+    .rte h2 {
+        font-size: 40px;
+        font-weight: 700;
+        color: #4F5955;
+        line-height: 1.2;
+        margin-bottom: 0;
+    }
+
+    /* Global H3-style */
+    h3,
+    .rte h3 {
+        font-size: 2.5rem; /* = 40px */
+        font-weight: 700;
+        color: var(--clr-primary);
+    }
+}

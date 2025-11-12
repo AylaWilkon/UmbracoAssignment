@@ -2,26 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --color-primary: #4F5955;
+    --color-gold: #D9C3A9;
+}
+
 @layer base {
     html {
         font-family: 'Poppins', sans-serif;
     }
 
     /* Global H2-style */
-    h2,
+    /*h2,
     .rte h2 {
         font-size: 40px;
         font-weight: 700;
         color: #4F5955;
         line-height: 1.2;
         margin-bottom: 0;
-    }
+    }*/
 
     /* Global H3-style */
-    h3,
+    /*h3,
     .rte h3 {
-        font-size: 2.5rem; /* = 40px */
-        font-weight: 700;
+        font-size: 2.5rem;*/ /* = 40px */
+        /*font-weight: 700;
         color: var(--clr-primary);
+    }*/
+}
+
+@layer components {
+    /*.footer a {
+        color: var(--clr-secondary);
+        text-decoration: none;
     }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }*/
+
+    .btn-primary {
+        @apply bg-[#4F5955] text-[#EDE7DD] font-semibold rounded-md px-8 py-3 no-underline inline-block text-center transition duration-200;
+    }
+
+        .btn-primary:hover {
+            @apply opacity-90;
+        }
+
+        .btn-primary:focus {
+            @apply outline-none ring-2 ring-offset-2 ring-[#4F5955];
+        }
+
+    .title-services-22 {
+        font-weight: 600;
+        font-size: 22px;
+        color: var(--color-primary);
+        padding: 20px;
+    }
+    .card-services
+    {
+        background-color: #FFFFFF;
+       
+    }
+    .card-services-description {
+        color: #535656;
+        padding: 15px; 
+    }
+    .title-orange-600 {
+        color: var(--color-gold);
+        font-weight: 600;
+    }
+    
+    .title-orange {
+        color: var(--color-gold);
+    }
+    .main-header {
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--color-primary);
+    }
+    .main-header-white {
+        font-size: 35px;
+        font-weight: 600;
+        color: #FFFFFF;
+    }
+
+    .top-bar {
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        font-size: 13px;
+    }
+    .success-stories {
+        background-color: var(--color-primary);
+    }
+    .success-stories-stats-white-text {
+        color: #ffffff;
+    }
+    .success-stories-stats-golden-numbers {
+        color: var(--color-gold);
+        font-size: 60px;
+        font-weight: 550;
+    }
+
 }

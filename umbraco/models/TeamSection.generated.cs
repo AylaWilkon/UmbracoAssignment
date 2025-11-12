@@ -55,7 +55,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("teamLabel")]
-		public virtual string TeamLabel => this.Value<string>(_publishedValueFallback, "teamLabel");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString TeamLabel => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "teamLabel");
 
 		///<summary>
 		/// Members

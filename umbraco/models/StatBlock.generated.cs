@@ -55,7 +55,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("statDescription")]
-		public virtual string StatDescription => this.Value<string>(_publishedValueFallback, "statDescription");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString StatDescription => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "statDescription");
 
 		///<summary>
 		/// Stat Number
@@ -63,6 +63,6 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("statNumber")]
-		public virtual string StatNumber => this.Value<string>(_publishedValueFallback, "statNumber");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString StatNumber => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "statNumber");
 	}
 }

@@ -63,7 +63,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("aboutLabel")]
-		public virtual string AboutLabel => this.Value<string>(_publishedValueFallback, "aboutLabel");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString AboutLabel => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "aboutLabel");
 
 		///<summary>
 		/// Name And Role
@@ -71,7 +71,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("aboutNameAndRole")]
-		public virtual string AboutNameAndRole => this.Value<string>(_publishedValueFallback, "aboutNameAndRole");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString AboutNameAndRole => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "aboutNameAndRole");
 
 		///<summary>
 		/// Quote
@@ -111,7 +111,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("formTitle")]
-		public virtual string FormTitle => this.Value<string>(_publishedValueFallback, "formTitle");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString FormTitle => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "formTitle");
 
 		///<summary>
 		/// ShowForm

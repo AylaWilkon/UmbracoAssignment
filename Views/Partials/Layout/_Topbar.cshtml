@@ -1,12 +1,19 @@
-﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+﻿@using Umbraco.Cms.Core.Strings
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
 @{
     var rootContent = Umbraco.ContentAtRoot();
     var siteSettings = rootContent.OfType<SiteSettings>().FirstOrDefault();
-    var contactAddress = siteSettings?.ContactAddress ?? "Ingen address angiven";
+
+    // Fungerar både om ContactAddress är Textstring eller RTE
+    string contactAddress =
+        siteSettings?.Value<string>("contactAddress")
+        ?? siteSettings?.Value<IHtmlEncodedString>("contactAddress")?.ToString()
+        ?? "Ingen address angiven";
 }
 
-<div class="bg-[var(--clr-primary)]">
+
+<div class="top-bar">
 
     <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
 

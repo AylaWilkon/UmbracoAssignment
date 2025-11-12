@@ -7,16 +7,21 @@
     var services = content.ServiceList;
 }
 
-<section class="py-[4rem] bg-[@sectionColor]">
+<section class="py-[4rem]" style="background-color: @sectionColor">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex flex-col gap-2 items-center">
 
-            @if (settings!.ShowServiceLabel)
+            @if (settings?.ShowServiceLabel == true && content.ServiceLabel != null && !string.IsNullOrWhiteSpace(content.ServiceLabel.ToString()))
             {
-                <h2 class="text-[-875rem] text-[var(--clr-secondary]) font-bold uppercase">@content.ServiceLabel</h2>
+                <div class="rte text-[0.875rem] font-bold uppercase text-center title-orange-600">
+                    @Html.Raw(content.ServiceLabel)
+                </div>
             }
 
-            <div class="rte">@Html.Raw(content.ServiceTitle)</div>
+            @if (content.ServiceTitle != null)
+            {
+                <div class="rte main-header">@Html.Raw(content.ServiceTitle)</div>
+            }
         </div>
         <div class="mt-5 grid grid-cols-3 gap-4">
             @if (services != null)
@@ -24,13 +29,13 @@
                 foreach (var item in services)
                 {
                     var service = (ContentModels.ServiceCard)item.Content;
-                    <div class="bg-[var(--clr-neutral)] border-2 border-[var(--clr-white-100)] w-full min-h-[350px] overflow-hidden">
-                        <a href="#" class="block no-underline">
-                            <h4 class="p-[1.5rem] font-semibold text-[var(--clr-primary)]">
+                    <div class="w-full min-h-[350px] overflow-hidden">
+                        <a href="#" class="block no-underline card-services">
+                            <h4 class="title-services-22">
                                 @service.CardTitle
                             </h4>
                             <img src="@service.ServiceImage?.Url()" alt="@service.ServiceImage" class="block w-full h-[220px] object-cover" />
-                            <p class="text-sm p-[1.5rem]">@service.ServiceDescription</p>
+                            <div class="card-services-description">@service.ServiceDescription</div>
                         </a>
                     </div>
                 }

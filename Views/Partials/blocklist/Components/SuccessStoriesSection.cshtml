@@ -11,24 +11,24 @@
     <!-- Bakgrundskarta -->
     @if (content.SuccesBgImage != null)
     {
-        <div class="absolute inset-0 opacity-10 bg-no-repeat bg-center bg-cover"
-             style="background-image: url('@content.SuccesBgImage.Url()');"></div>
+        <div class="absolute inset-0 bg-no-repeat success-stories"
+             style="background-image: url('@content.SuccesBgImage.Url()'); background-position: top;"></div>
     }
 
     <div class="relative z-10 max-w-7xl mx-auto px-4">
 
         <!-- Label -->
-        @if (!string.IsNullOrWhiteSpace(content.SuccessLabel))
+        @if (content.SuccessLabel != null && !string.IsNullOrWhiteSpace(content.SuccessLabel.ToString()))
         {
-            <p class="text-xs uppercase tracking-[0.2em] mb-2 text-[var(--clr-secondary)] font-semibold">
-                @content.SuccessLabel
-            </p>
+            <div class="title-orange">
+                @Html.Raw(content.SuccessLabel)
+            </div>
         }
 
         <!-- Titel -->
         @if (content.SuccessTitle != null)
         {
-            <div class="rte mb-10">@Html.Raw(content.SuccessTitle)</div>
+            <div class="rte mb-10 main-header-white">@Html.Raw(content.SuccessTitle)</div>
         }
 
         <!-- Statistikrutor -->
@@ -40,8 +40,8 @@
                     var stat = (ContentModels.StatBlock)block.Content;
 
                     <div class="text-center">
-                        <p class="text-[3rem] font-bold text-[var(--clr-secondary)] leading-none mb-2">@stat.StatNumber</p>
-                        <p class="text-sm text-[var(--clr-neutral)]">@stat.StatDescription</p>
+                        <div class="success-stories-stats-golden-numbers">@stat.StatNumber</div>
+                        <div class="success-stories-stats-white-text">@stat.StatDescription</div>
                     </div>
                 }
             </div>
@@ -50,12 +50,12 @@
         <!-- Team-bild -->
         @if (content.SuccessTeam != null)
         {
-            <div class="flex justify-center mb-8">
+            <div class="flex justify-center mb-8" >
                 <img src="@content.SuccessTeam.Url()" alt="Success team"
-                     class="rounded-lg shadow-lg max-w-[800px] w-full object-cover" />
+                     class="w-[970px] h-[544px] object-cover" />
             </div>
         }
-
+@* 
         <!-- Loggor -->
         @if (content.ClientLogo != null && content.ClientLogo.Any())
         {
@@ -65,7 +65,7 @@
                     <img src="@logo.Url()" alt="@logo.Name" class="h-[40px] object-contain" />
                 }
             </div>
-        }
+        } *@
 
     </div>
 </section>

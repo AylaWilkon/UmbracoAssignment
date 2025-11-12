@@ -1,36 +1,51 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Strings;
 
 @{
     var content = (ContentModels.AboutSection)Model.Content;
+
+    // Hämta RTE-fält via alias om du vill vara extra robust
+    IHtmlEncodedString formTitle = content.Value<IHtmlEncodedString>("formTitle");
+    IHtmlEncodedString formDescription = content.Value<IHtmlEncodedString>("formDescription");
+    IHtmlEncodedString aboutLabel = content.Value<IHtmlEncodedString>("aboutLabel");
+    IHtmlEncodedString aboutTitle = content.Value<IHtmlEncodedString>("aboutTitle");
+    IHtmlEncodedString aboutQuote = content.Value<IHtmlEncodedString>("aboutQuote");
+    IHtmlEncodedString aboutDescription = content.Value<IHtmlEncodedString>("aboutDescription");
+    IHtmlEncodedString aboutNameAndRole = content.Value<IHtmlEncodedString>("aboutNameAndRole");
 }
 
-<section class="py-16" style="position: relative; overflow: visible;">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12" style="padding-top: 7rem; align-items: stretch; position: relative; min-height: 572px;">
+<section class="p-4" style="position: relative; overflow: visible;">
+    <div class="max-w-7xl mx-auto px-4 grid-cols-1 md:grid-cols-2 gap-12"
+         style="align-items: stretch; position: relative; min-height: 572px;">
 
-        <!-- Left cell: About Us -->
-        <div style="max-width: 60%; display: flex; flex-direction: column; justify-content: space-between;">
+        <!-- Vänster kolumn -->
+        <div style="max-width: 60%; display: flex; flex-direction: column; justify-content: space-between; padding-top: 4rem;">
             <div>
-                @if (content.AboutLabel != null)
+                @* Label (RTE) *@
+                @if (aboutLabel != null && !string.IsNullOrWhiteSpace(aboutLabel.ToString()))
                 {
-                    <p class="text-xs tracking-widest uppercase font-bold text-[var(--clr-secondary)] mb-4">
-                        @content.AboutLabel
-                    </p>
+                    <div class="rte title-orange-600">
+                        @aboutLabel
+                    </div>
                 }
 
-                @if (content.AboutTitle != null)
+                @* Titel (RTE) *@
+                @if (aboutTitle != null && !string.IsNullOrWhiteSpace(aboutTitle.ToString()))
                 {
-                    <div class="rte mb-10">@Html.Raw(content.AboutTitle)</div>
+                    <div class="rte main-header">@aboutTitle</div>
                 }
 
-                @if (content.AboutQuote != null && !string.IsNullOrWhiteSpace(content.AboutQuote.ToString()))
+                @* Citat (RTE) *@
+                @if (aboutQuote != null && !string.IsNullOrWhiteSpace(aboutQuote.ToString()))
                 {
-                    <div class="rte italic text-[var(--clr-body-text)] mb-6">@Html.Raw(content.AboutQuote)</div>
+                    <div class="rte italic text-[var(--clr-body-text)] mb-6">@aboutQuote</div>
                 }
 
-                @if (content.AboutDescription != null)
+                @* Beskrivning (RTE) *@
+                @if (aboutDescription != null && !string.IsNullOrWhiteSpace(aboutDescription.ToString()))
                 {
-                    <div class="rte mb-12">@Html.Raw(content.AboutDescription)</div>
+                    <div class="rte mb-12">@aboutDescription</div>
                 }
             </div>
 
@@ -40,27 +55,36 @@
                     <img src="@content.AboutSignature.Url()" alt="Signature"
                          style="width: 161px; height: auto; object-fit: contain; margin-bottom: 0.5rem; display: block;" />
                 }
-                @if (!string.IsNullOrWhiteSpace(content.AboutNameAndRole))
+
+                @* Namn & roll (RTE) *@
+                @if (aboutNameAndRole != null && !string.IsNullOrWhiteSpace(aboutNameAndRole.ToString()))
                 {
-                    <p class="text-sm text-[var(--clr-body-text)]">@content.AboutNameAndRole</p>
+                    <p class="text-sm text-[var(--clr-body-text)]">@aboutNameAndRole</p>
                 }
             </div>
         </div>
 
-        <!-- Right cell: Form placeholder (for grid layout) -->
+        <!-- Tom cell för grid-layouten -->
         <div></div>
 
-        <!-- Form positioned absolutely to overlap hero section -->
+        <!-- Formuläret -->
         <div style="position: absolute; top: 0; right: 1rem; width: 470px; height: 572px; z-index: 10; transform: translateY(-80px);">
-            <div style="width: 470px; height: 572px; border: 1px solid #d1d5db; border-radius: 0.5rem; box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.12); overflow: hidden; background-color: white; display: flex; flex-direction: column;">
+            <div style="width: 470px; height: 572px; border: 1px solid #d1d5db; border-radius: 0.5rem; box-shadow: 4px 8px 24px rgba(0,0,0,.12); overflow: hidden; background-color: white; display: flex; flex-direction: column;">
                 <div style="background-color: #4F5B54; color: #E0DED7; padding: 2rem 1.5rem; text-align: center; flex-shrink: 0;">
-                    <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">@(content.FormTitle ?? "Request a call back")</h2>
+                    @if (formTitle != null && !string.IsNullOrWhiteSpace(formTitle.ToString()))
+                    {
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">@formTitle</h2>
+                    }
+                    else
+                    {
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Request a call back</h2>
+                    }
                 </div>
 
                 <div style="background-color: white; padding: 2rem 1.5rem; flex: 1; display: flex; flex-direction: column; overflow-y: auto;">
-                    @if (content.FormDescription != null && !string.IsNullOrWhiteSpace(content.FormDescription.ToString()))
+                    @if (formDescription != null && !string.IsNullOrWhiteSpace(formDescription.ToString()))
                     {
-                        <p style="color: #4A4A4A; font-style: italic; margin-bottom: 2rem;">@Html.Raw(content.FormDescription)</p>
+                        <p style="color: #4A4A4A; font-style: italic; margin-bottom: 2rem;">@formDescription</p>
                     }
 
                     <style>
@@ -70,20 +94,25 @@
                     </style>
 
                     <form style="flex: 1; display: flex; flex-direction: column;">
-                        <input type="text" placeholder="Name" class="form-input" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 0.25rem; background-color: white; padding: 0.75rem; font-size: 0.875rem; margin-bottom: 0.75rem; outline: none;" />
-                        <input type="email" placeholder="Email address" class="form-input" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 0.25rem; background-color: white; padding: 0.75rem; font-size: 0.875rem; margin-bottom: 0.75rem; outline: none;" />
-                        <input type="tel" placeholder="Phone" class="form-input" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 0.25rem; background-color: white; padding: 0.75rem; font-size: 0.875rem; margin-bottom: 0.75rem; outline: none;" />
-                        <select style="width: 100%; border: 1px solid #D1D5DB; border-radius: 0.25rem; background-color: white; padding: 0.75rem; font-size: 0.875rem; color: #4A4A4A; margin-bottom: 1rem; outline: none;">
+                        <input type="text" placeholder="Name" class="form-input"
+                               style="width: 100%; border: 1px solid #D1D5DB; border-radius: .25rem; background-color: white; padding: .75rem; font-size: .875rem; margin-bottom: .75rem; outline: none;" />
+                        <input type="email" placeholder="Email address" class="form-input"
+                               style="width: 100%; border: 1px solid #D1D5DB; border-radius: .25rem; background-color: white; padding: .75rem; font-size: .875rem; margin-bottom: .75rem; outline: none;" />
+                        <input type="tel" placeholder="Phone" class="form-input"
+                               style="width: 100%; border: 1px solid #D1D5DB; border-radius: .25rem; background-color: white; padding: .75rem; font-size: .875rem; margin-bottom: .75rem; outline: none;" />
+                        <select style="width: 100%; border: 1px solid #D1D5DB; border-radius: .25rem; background-color: white; padding: .75rem; font-size: .875rem; color: #4A4A4A; margin-bottom: 1rem; outline: none;">
                             <option>Financial consulting</option>
-                            <option>Tax & Trusts</option>
+                            <option>Tax &amp; Trusts</option>
                             <option>Audit</option>
                         </select>
-                        <button type="button" style="width: 100%; border-radius: 0.25rem; padding: 0.75rem 1.25rem; background-color: #EFEFE7; color: #4F5B54; font-weight: 500; border: none; cursor: pointer; margin-top: auto;">
+                        <button type="button"
+                                style="width: 100%; border-radius: .25rem; padding: .75rem 1.25rem; background-color: #EFEFE7; color: #4F5B54; font-weight: 500; border: none; cursor: pointer; margin-top: auto;">
                             Submit
                         </button>
                     </form>
                 </div>
             </div>
         </div>
+
     </div>
 </section>

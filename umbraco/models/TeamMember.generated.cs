@@ -63,7 +63,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("teamMemberName")]
-		public virtual string TeamMemberName => this.Value<string>(_publishedValueFallback, "teamMemberName");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString TeamMemberName => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "teamMemberName");
 
 		///<summary>
 		/// Role
@@ -71,6 +71,6 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("teamMemberRole")]
-		public virtual string TeamMemberRole => this.Value<string>(_publishedValueFallback, "teamMemberRole");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString TeamMemberRole => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "teamMemberRole");
 	}
 }

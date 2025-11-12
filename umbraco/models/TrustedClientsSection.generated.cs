@@ -79,15 +79,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("clientStoryButton")]
-		public virtual string ClientStoryButton => this.Value<string>(_publishedValueFallback, "clientStoryButton");
-
-		///<summary>
-		/// Trusted Client Label
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("trustedClientLabel")]
-		public virtual string TrustedClientLabel => this.Value<string>(_publishedValueFallback, "trustedClientLabel");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString ClientStoryButton => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "clientStoryButton");
 
 		///<summary>
 		/// Trusted Section Title

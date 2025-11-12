@@ -18,14 +18,14 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
-	/// <summary>Site Settings</summary>
-	[PublishedModel("siteSettings")]
-	public partial class SiteSettings : PublishedContentModel
+	/// <summary>Success Stories Section</summary>
+	[PublishedModel("successStoriesSection")]
+	public partial class SuccessStoriesSection : PublishedElementModel
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
-		public new const string ModelTypeAlias = "siteSettings";
+		public new const string ModelTypeAlias = "successStoriesSection";
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
@@ -34,14 +34,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 			=> PublishedModelUtility.GetModelContentType(contentTypeCache, ModelItemType, ModelTypeAlias);
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedContentTypeCache contentTypeCache, Expression<Func<SiteSettings, TValue>> selector)
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedContentTypeCache contentTypeCache, Expression<Func<SuccessStoriesSection, TValue>> selector)
 			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(contentTypeCache), selector);
 #pragma warning restore 0109
 
 		private IPublishedValueFallback _publishedValueFallback;
 
 		// ctor
-		public SiteSettings(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
+		public SuccessStoriesSection(IPublishedElement content, IPublishedValueFallback publishedValueFallback)
 			: base(content, publishedValueFallback)
 		{
 			_publishedValueFallback = publishedValueFallback;
@@ -50,67 +50,51 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Address
+		/// Client Logo
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("contactAddress")]
-		public virtual string ContactAddress => this.Value<string>(_publishedValueFallback, "contactAddress");
+		[ImplementPropertyType("clientLogo")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.MediaWithCrops> ClientLogo => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.MediaWithCrops>>(_publishedValueFallback, "clientLogo");
 
 		///<summary>
-		/// Email
+		/// Statistics List
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("contactEmail")]
-		public virtual string ContactEmail => this.Value<string>(_publishedValueFallback, "contactEmail");
+		[ImplementPropertyType("statisticsList")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel StatisticsList => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "statisticsList");
 
 		///<summary>
-		/// Phone
+		/// SuccesBgImage
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("contactPhone")]
-		public virtual string ContactPhone => this.Value<string>(_publishedValueFallback, "contactPhone");
+		[ImplementPropertyType("succesBgImage")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops SuccesBgImage => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "succesBgImage");
 
 		///<summary>
-		/// Footer Bg Color
+		/// Success Label
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("footerBgColor")]
-		public virtual global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor FooterBgColor => this.Value<global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor>(_publishedValueFallback, "footerBgColor");
+		[ImplementPropertyType("successLabel")]
+		public virtual string SuccessLabel => this.Value<string>(_publishedValueFallback, "successLabel");
 
 		///<summary>
-		/// Footer Text
+		/// Success Team
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("footerText")]
-		public virtual string FooterText => this.Value<string>(_publishedValueFallback, "footerText");
+		[ImplementPropertyType("successTeam")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops SuccessTeam => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "successTeam");
 
 		///<summary>
-		/// Platform List
+		/// Success Title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("platformList")]
-		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel PlatformList => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "platformList");
-
-		///<summary>
-		/// Site Logo
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("siteLogo")]
-		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops SiteLogo => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "siteLogo");
-
-		///<summary>
-		/// Site Name
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.3.3+644334c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("siteName")]
-		public virtual string SiteName => this.Value<string>(_publishedValueFallback, "siteName");
+		[ImplementPropertyType("successTitle")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString SuccessTitle => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "successTitle");
 	}
 }

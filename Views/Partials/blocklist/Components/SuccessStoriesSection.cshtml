@@ -1,0 +1,71 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    var content = (ContentModels.SuccessStoriesSection)Model.Content;
+    var stats = content.StatisticsList;
+}
+
+<section class="relative bg-[var(--clr-primary)] py-16 text-center text-[var(--clr-neutral)] overflow-hidden">
+
+    <!-- Bakgrundskarta -->
+    @if (content.SuccesBgImage != null)
+    {
+        <div class="absolute inset-0 opacity-10 bg-no-repeat bg-center bg-cover"
+             style="background-image: url('@content.SuccesBgImage.Url()');"></div>
+    }
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4">
+
+        <!-- Label -->
+        @if (!string.IsNullOrWhiteSpace(content.SuccessLabel))
+        {
+            <p class="text-xs uppercase tracking-[0.2em] mb-2 text-[var(--clr-secondary)] font-semibold">
+                @content.SuccessLabel
+            </p>
+        }
+
+        <!-- Titel -->
+        @if (content.SuccessTitle != null)
+        {
+            <div class="rte mb-10">@Html.Raw(content.SuccessTitle)</div>
+        }
+
+        <!-- Statistikrutor -->
+        @if (stats != null && stats.Any())
+        {
+            <div class="flex flex-wrap justify-center gap-12 mb-12">
+                @foreach (var block in stats)
+                {
+                    var stat = (ContentModels.StatBlock)block.Content;
+
+                    <div class="text-center">
+                        <p class="text-[3rem] font-bold text-[var(--clr-secondary)] leading-none mb-2">@stat.StatNumber</p>
+                        <p class="text-sm text-[var(--clr-neutral)]">@stat.StatDescription</p>
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- Team-bild -->
+        @if (content.SuccessTeam != null)
+        {
+            <div class="flex justify-center mb-8">
+                <img src="@content.SuccessTeam.Url()" alt="Success team"
+                     class="rounded-lg shadow-lg max-w-[800px] w-full object-cover" />
+            </div>
+        }
+
+        <!-- Loggor -->
+        @if (content.ClientLogo != null && content.ClientLogo.Any())
+        {
+            <div class="flex justify-center flex-wrap gap-8 opacity-80">
+                @foreach (var logo in content.ClientLogo)
+                {
+                    <img src="@logo.Url()" alt="@logo.Name" class="h-[40px] object-contain" />
+                }
+            </div>
+        }
+
+    </div>
+</section>

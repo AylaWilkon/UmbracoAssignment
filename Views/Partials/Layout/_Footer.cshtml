@@ -1,0 +1,15 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var rootContent = Umbraco.ContentAtRoot();
+    var siteSettings = rootContent.OfType<SiteSettings>().FirstOrDefault();
+    var footerText = siteSettings?.FooterText ?? "© Onatrix. All Rights Reserved.";
+}
+
+<footer class="py-4" style="background-color:@(siteSettings?.FooterBgColor?.Color ?? "#0e0e0e")">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-[var(--clr-white-100)] text-sm">
+            @Html.Raw(footerText)
+        </p>
+    </div>
+</footer>

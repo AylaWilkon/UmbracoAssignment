@@ -16,12 +16,19 @@
         <div class="w-5/12 flex flex-col gap-8">
             <h1 class="text-[4.5rem] text-[#4F5955] font-bold leading-none">@content.HeroTitle</h1>
             <div class="rte">@Html.Raw(content.HeroText)</div>
-            @if (content.HeroLink != null)
+           @*  @if (content.HeroLink != null)
             {
                 <a class="btn-primary self-start" href="@content.HeroLink.Url">
                     @content.HeroLink.Name
                 </a>
-            }
+            } *@
+@* 
+            @if (content.HeroButtonLink != null)
+            {
+                <a class="btn-primary self-start" href="@content.HeroButtonLink.Url">
+                    @content.HeroButtonText
+                </a>
+            } *@
 
         </div>
     </div>

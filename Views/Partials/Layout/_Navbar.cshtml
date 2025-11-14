@@ -1,0 +1,68 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels
+
+@{
+    // Hämta Site Settings bland root-noderna
+    var rootContent = Umbraco.ContentAtRoot();
+    var settings = rootContent.OfType<SiteSettings>().FirstOrDefault();
+
+    var logo = settings?.Value<MediaWithCrops>("logoOnatrix");
+
+    // Ta bort "?? new BlockListModel()"
+    // var navItems = settings?.Value<BlockListModel>("mainNavigation");
+
+    var searchPage = settings?.Value<IPublishedContent>("searchPage");
+}
+
+
+<nav class="navbar">
+    <div class="navbar-inner">
+        
+
+        <div class="navbar-logo">
+            @if (logo != null)
+            {
+                <a href="@Model.Root().Url()">
+                    <img src="@logo.Url()" alt="Onatrix logo" />
+                </a>
+            }
+        </div>
+
+@*         <ul class="navbar-links">
+            @if (navItems != null)
+            {
+                foreach (var item in navItems)
+                {
+                    var content = item.Content;
+                    var label = content.Value<string>("navLabel");
+                    var link = content.Value<IEnumerable<Link>>("navLink")?.FirstOrDefault();
+
+                    if (link != null)
+                    {
+                        <li>
+                            <a href="@link.Url" target="@link.Target">
+                                @label
+                            </a>
+                        </li>
+                    }
+                }
+            }
+        </ul> *@
+
+
+
+
+        <div class="navbar-search">
+            @if (searchPage != null)
+            {
+                <a href="@searchPage.Url()">
+                    <i class="icon-search"></i>
+                </a>
+            }
+        </div>
+    </div>
+</nav>

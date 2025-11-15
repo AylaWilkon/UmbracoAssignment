@@ -29,27 +29,39 @@ if (aspNetCoreEnvironment == "Production")
     }
     
     // Configure media path for Azure
+    // Check for both the correct name and the truncated name (Azure sometimes truncates long variable names)
     var mediaPathEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath");
-    if (string.IsNullOrWhiteSpace(mediaPathEnv))
+    var mediaPathEnvTruncated = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysic");
+    
+    var homePath = Environment.GetEnvironmentVariable("HOME");
+    if (!string.IsNullOrWhiteSpace(homePath))
     {
-        var homePath = Environment.GetEnvironmentVariable("HOME");
-        if (!string.IsNullOrWhiteSpace(homePath))
+        var mediaFullPath = Path.Combine(homePath, "site", "wwwroot", "wwwroot", "media");
+        
+        // Use the truncated value if it exists, otherwise use the calculated path
+        if (!string.IsNullOrWhiteSpace(mediaPathEnvTruncated))
         {
-            var mediaFullPath = Path.Combine(homePath, "site", "wwwroot", "wwwroot", "media");
-            Environment.SetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath", mediaFullPath);
-            
-            // Ensure the media directory exists
-            try
+            mediaFullPath = mediaPathEnvTruncated;
+        }
+        else if (!string.IsNullOrWhiteSpace(mediaPathEnv))
+        {
+            mediaFullPath = mediaPathEnv;
+        }
+        
+        // Always set the correct environment variable name
+        Environment.SetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath", mediaFullPath);
+        
+        // Ensure the media directory exists
+        try
+        {
+            if (!Directory.Exists(mediaFullPath))
             {
-                if (!Directory.Exists(mediaFullPath))
-                {
-                    Directory.CreateDirectory(mediaFullPath);
-                }
+                Directory.CreateDirectory(mediaFullPath);
             }
-            catch
-            {
-                // If we can't create it, Umbraco will handle the error
-            }
+        }
+        catch
+        {
+            // If we can't create it, Umbraco will handle the error
         }
     }
 }
@@ -61,47 +73,83 @@ if (builder.Environment.IsProduction())
 {
     var productionOverrides = new Dictionary<string, string?>();
     
-    // Verify ApplicationUrl is set
+    // Verify ApplicationUrl is set - ALWAYS set it explicitly to ensure Umbraco reads it
     var appUrl = builder.Configuration["Umbraco:CMS:Global:ApplicationUrl"];
-    if (string.IsNullOrWhiteSpace(appUrl))
+    var appUrlEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__ApplicationUrl");
+    
+    string? finalAppUrl = null;
+    if (!string.IsNullOrWhiteSpace(appUrl))
     {
-        var appUrlEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__ApplicationUrl");
-        if (!string.IsNullOrWhiteSpace(appUrlEnv))
+        finalAppUrl = appUrl.Trim();
+    }
+    else if (!string.IsNullOrWhiteSpace(appUrlEnv))
+    {
+        finalAppUrl = appUrlEnv.Trim();
+    }
+    else
+    {
+        var websiteHostname = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+        if (!string.IsNullOrWhiteSpace(websiteHostname))
         {
-            productionOverrides["Umbraco:CMS:Global:ApplicationUrl"] = appUrlEnv.Trim();
-        }
-        else
-        {
-            var websiteHostname = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
-            if (!string.IsNullOrWhiteSpace(websiteHostname))
-            {
-                productionOverrides["Umbraco:CMS:Global:ApplicationUrl"] = $"https://{websiteHostname}";
-            }
+            finalAppUrl = $"https://{websiteHostname}";
         }
     }
     
-    // Verify UseHttps is set
+    // Always set it in overrides to ensure it's available
+    if (!string.IsNullOrWhiteSpace(finalAppUrl))
+    {
+        productionOverrides["Umbraco:CMS:Global:ApplicationUrl"] = finalAppUrl;
+    }
+    
+    // Verify UseHttps is set - ALWAYS set it explicitly
     var useHttps = builder.Configuration["Umbraco:CMS:Global:UseHttps"];
-    if (useHttps != "true" && useHttps != "True")
+    var useHttpsEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UseHttps");
+    var useHttpsValue = !string.IsNullOrWhiteSpace(useHttpsEnv) ? useHttpsEnv : useHttps;
+    if (useHttpsValue != "true" && useHttpsValue != "True")
     {
         productionOverrides["Umbraco:CMS:Global:UseHttps"] = "true";
     }
+    else
+    {
+        productionOverrides["Umbraco:CMS:Global:UseHttps"] = "true"; // Always set to ensure it's available
+    }
     
-    // Verify ModelsBuilder mode is set
+    // Verify ModelsBuilder mode is set - ALWAYS set it explicitly
     var modelsMode = builder.Configuration["Umbraco:CMS:ModelsBuilder:ModelsMode"];
-    if (modelsMode != "Nothing")
+    var modelsModeEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__ModelsBuilder__ModelsMode");
+    var modelsModeValue = !string.IsNullOrWhiteSpace(modelsModeEnv) ? modelsModeEnv : modelsMode;
+    if (modelsModeValue != "Nothing")
     {
         productionOverrides["Umbraco:CMS:ModelsBuilder:ModelsMode"] = "Nothing";
     }
+    else
+    {
+        productionOverrides["Umbraco:CMS:ModelsBuilder:ModelsMode"] = "Nothing"; // Always set to ensure it's available
+    }
     
-    // Verify media path is set
+    // Verify media path is set (check both correct and truncated variable names)
     var mediaPath = builder.Configuration["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"];
     if (string.IsNullOrWhiteSpace(mediaPath))
     {
         var mediaPathEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath");
+        var mediaPathEnvTruncated = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysic");
+        
         if (!string.IsNullOrWhiteSpace(mediaPathEnv))
         {
             productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnv;
+        }
+        else if (!string.IsNullOrWhiteSpace(mediaPathEnvTruncated))
+        {
+            productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnvTruncated;
+        }
+        else
+        {
+            var homePath = Environment.GetEnvironmentVariable("HOME");
+            if (!string.IsNullOrWhiteSpace(homePath))
+            {
+                var mediaFullPath = Path.Combine(homePath, "site", "wwwroot", "wwwroot", "media");
+                productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaFullPath;
+            }
         }
     }
     

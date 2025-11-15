@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - umbraco-assignment
 on:
   push:
     branches:
-      - master
+      - master        # kör på push till master
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x'
+          dotnet-version: '9.0.x'
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -44,12 +44,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+          # ingen path => hämtas till ./.net-app
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'umbraco-assignment'
           slot-name: 'Production'
-          package: .
+          package: ./.net-app
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D0AB1443D3D4C8A8C840EF91E1A7889 }}

@@ -10,6 +10,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+	<ItemGroup>
+  <Content Include="wwwroot\media\**\*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+  </Content>
+</ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\media\042b1e0n\success-team.svg" />
     <None Include="wwwroot\media\24yejrmu\kevin-gardner.svg" />

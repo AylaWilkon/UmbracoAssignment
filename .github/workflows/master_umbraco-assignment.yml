@@ -6,45 +6,46 @@ name: Build and deploy ASP.Net Core app to Azure Web App - umbraco-assignment
 on:
   push:
     branches:
-      - master        # kör på push till master
+      - master
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Set up .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
-      - name: Build with dotnet
+      - name: Build project
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
+      - name: Publish project
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
-      - name: Upload artifact for deployment job
+      - name: Upload publish artifact
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ env.DOTNET_ROOT }}/myapp
 
   deploy:
     runs-on: windows-latest
     needs: build
-    
+
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-          # ingen path => hämtas till ./.net-app
+          path: ./.net-app   # VERY IMPORTANT – creates the folder that Azure deploy uses
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -52,5 +53,5 @@ jobs:
         with:
           app-name: 'umbraco-assignment'
           slot-name: 'Production'
-          package: ./.net-app
+          package: ./.net-app         # THIS MUST MATCH THE DOWNLOAD PATH
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D0AB1443D3D4C8A8C840EF91E1A7889 }}

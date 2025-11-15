@@ -1,0 +1,42 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
+
+@{
+    var currentPage = Umbraco.AssignedContentItem;
+    var root = currentPage.Root();
+
+    var navItems = root.Children()
+                       .Where(x => x.IsVisible());
+}
+
+<section class="navbar-section">
+    <div class="navbar-inner">
+
+        <div class="navbar-logo">
+            <a href="@root.Url()">
+                <img src="\css\Onatrix-Logo.svg" alt="@root.Name" />
+            </a>
+        </div>
+
+        <ul class="navbar-links">
+            @foreach (var navItem in navItems)
+            {
+                <li class="navbar-link-item">
+                    <a href="@navItem.Url()" class="@(navItem.Id == currentPage.Id ? "is-active" : null)">
+                        @navItem.Name
+                    </a>
+                </li>
+            }
+        </ul>
+
+        <div class="navbar-search">
+            <button type="button"
+                    class="navbar-search-btn"
+                    aria-label="Sök">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+    </div>
+</section>

@@ -1,5 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
 @{
+    var content = (ContentModels.LogoSection)Model.Content;
 }
+<section class="logo-section">
+    <div class="logo-container">
+        @if (content?.LogoImage != null)
+        {
+            foreach (var item in content.LogoImage)
+            {
+                <img src="@item.Url()" alt="Client logo" class="client-logo" />
+            }
+        }
+    </div>
+</section>

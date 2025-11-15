@@ -1,0 +1,87 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Extensions
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
+
+@{
+    var content = (ContentModels.ContactDetailsSection)Model.Content;
+
+    // Bild – ta första från Multiple Image Media Picker
+    var bgImage = content.ContactDetailsSectionBg;
+}
+
+<section class="contact-details-section">
+    <div class="contact-details-inner">
+
+        <!-- Vänster: bilden på personen -->
+        <div class="contact-details-image">
+            @if (bgImage is not null)
+            {
+                <img src="@bgImage.Url()" alt="@bgImage.Name" />
+            }
+        </div>
+
+        <!-- Höger: text och kontaktinfo -->
+        <div class="contact-details-content">
+            @if (!string.IsNullOrWhiteSpace(content.ContactDetailsSectionTitle))
+            {
+                <h2 class="contact-details-title">
+                    @content.ContactDetailsSectionTitle
+                </h2>
+            }
+
+            <div class="contact-details-items">
+
+                @* Office location *@
+                @if (!string.IsNullOrWhiteSpace(content.ContactDetailsSectionOfficeLocation))
+                {
+                    <div class="contact-details-item">
+                        <div class="contact-details-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="contact-details-text">
+                            <span class="contact-details-label">Office location</span>
+                            <span class="contact-details-value">
+                                @content.ContactDetailsSectionOfficeLocation
+                            </span>
+                        </div>
+                    </div>
+                }
+
+                @* Phone number *@
+                @if (!string.IsNullOrWhiteSpace(content.ContactDetailsSectionPhone))
+                {
+                    <div class="contact-details-item">
+                        <div class="contact-details-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="contact-details-text">
+                            <span class="contact-details-label">Phone number</span>
+                            <span class="contact-details-value">
+                                @content.ContactDetailsSectionPhone
+                            </span>
+                        </div>
+                    </div>
+                }
+
+                @* Email address *@
+                @if (!string.IsNullOrWhiteSpace(content.ContactDetailsSectionEmailContact))
+                {
+                    <div class="contact-details-item">
+                        <div class="contact-details-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="contact-details-text">
+                            <span class="contact-details-label">E-mail address</span>
+                            <a class="contact-details-value contact-details-link"
+                               href="mailto:@content.ContactDetailsSectionEmailContact">
+                                @content.ContactDetailsSectionEmailContact
+                            </a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

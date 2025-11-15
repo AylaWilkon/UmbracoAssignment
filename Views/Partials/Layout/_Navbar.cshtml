@@ -32,30 +32,6 @@
             }
         </div>
 
-@*         <ul class="navbar-links">
-            @if (navItems != null)
-            {
-                foreach (var item in navItems)
-                {
-                    var content = item.Content;
-                    var label = content.Value<string>("navLabel");
-                    var link = content.Value<IEnumerable<Link>>("navLink")?.FirstOrDefault();
-
-                    if (link != null)
-                    {
-                        <li>
-                            <a href="@link.Url" target="@link.Target">
-                                @label
-                            </a>
-                        </li>
-                    }
-                }
-            }
-        </ul> *@
-
-
-
-
         <div class="navbar-search">
             @if (searchPage != null)
             {

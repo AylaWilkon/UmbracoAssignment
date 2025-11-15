@@ -665,8 +665,7 @@ html {
   padding: 20px;
 }
 
-.card-services
-    {
+.card-services {
   background-color: #FFFFFF;
 }
 
@@ -714,6 +713,220 @@ html {
   color: var(--color-gold);
   font-size: 60px;
   font-weight: 550;
+}
+
+.logo-section {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.client-logo {
+  height: 60px;
+  width: auto;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.client-logo:hover {
+  opacity: 1;
+}
+
+/* Sj�lva baren */
+
+.navbar-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* Inre container: logga � l�nkar � ikon */
+
+.navbar-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* V�nster: logga */
+
+.navbar-logo img {
+  display: block;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.navbar-link-item a {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: #4b5555;
+}
+
+.navbar-link-item a.is-active {
+  color: #000000;
+}
+
+/* H�ger: s�kikon */
+
+.navbar-search {
+  flex: 0 0 auto;
+}
+
+.navbar-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a4f54;
+  font-size: 16px;
+  padding: 0;
+}
+
+.navbar-search-btn:hover {
+  color: #000000;
+}
+
+/*Contact Section*/
+
+/* Bas: se till att Poppins anv�nds �verallt */
+
+body {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Sektionen som helhet */
+
+.contact-details-section {
+  background-color: #f7f7f7;
+  /* eller #ffffff om du vill ha helt vit */
+  padding: 80px 0;
+}
+
+/* Inre container */
+
+.contact-details-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  /* avst�nd mellan bild och text */
+}
+
+/* V�nster: bilden */
+
+.contact-details-image {
+  flex: 0 0 45%;
+  /* ungef�r v�nster halva */
+}
+
+.contact-details-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+/* H�ger: text + kontaktinfo */
+
+.contact-details-content {
+  flex: 1 1 auto;
+}
+
+/* Rubriken � samma stil som i Figma (typ stor H2) */
+
+.contact-details-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #333f48;
+  /* m�rk gr�-gr�n liknande designen */
+  margin: 0 0 32px;
+}
+
+/* Container f�r de tre �raderna� */
+
+.contact-details-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* En rad: ikon + label + value */
+
+.contact-details-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Ikoner (font awesome) */
+
+.contact-details-icon {
+  margin-top: 4px;
+  /* s� ikonen hamnar mitt i textblocket */
+  color: #f5a623;
+  /* valfri accentf�rg, byt om du vill */
+  font-size: 14px;
+}
+
+/* Textblock till h�ger om ikon */
+
+.contact-details-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Label (Office location, Phone number etc.) */
+
+.contact-details-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888f95;
+}
+
+/* Sj�lva v�rdet: adress, telefon, e-post */
+
+.contact-details-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555e64;
+}
+
+/* L�nken (e-post) ska se ut som text men �nd� vara klickbar */
+
+.contact-details-link {
+  text-decoration: none;
+  color: #0d7cff;
+  /* l�nkf�rg, byt efter designen */
+}
+
+.contact-details-link:hover {
+  text-decoration: underline;
 }
 
 .visible {

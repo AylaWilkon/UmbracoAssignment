@@ -153,18 +153,41 @@ if (builder.Environment.IsProduction())
         }
     }
     
-    // Add overrides to configuration if needed
+    // Add overrides to configuration - use AddInMemoryCollection which is the proper way
     if (productionOverrides.Count > 0)
     {
         builder.Configuration.AddInMemoryCollection(productionOverrides);
     }
 }
 
-builder.CreateUmbracoBuilder()
+var umbracoBuilder = builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
-    .AddComposers()
-    .Build();
+    .AddComposers();
+
+// Verify configuration is set before Umbraco builder reads it
+if (builder.Environment.IsProduction())
+{
+    var appUrl = builder.Configuration["Umbraco:CMS:Global:ApplicationUrl"];
+    if (string.IsNullOrWhiteSpace(appUrl))
+    {
+        // Final fallback - add to configuration sources if still missing
+        var websiteHostname = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+        if (!string.IsNullOrWhiteSpace(websiteHostname))
+        {
+            builder.Configuration.Sources.Insert(0, 
+                new Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource 
+                { 
+                    InitialData = new Dictionary<string, string?>
+                    {
+                        ["Umbraco:CMS:Global:ApplicationUrl"] = $"https://{websiteHostname}"
+                    }
+                });
+        }
+    }
+}
+
+umbracoBuilder.Build();
 
 WebApplication app = builder.Build();
 

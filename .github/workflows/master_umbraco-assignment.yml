@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - umbraco-assignment
 
 on:
@@ -16,25 +13,26 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up .NET 9
+      - name: Setup .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
-      - name: Build project
-        run: dotnet build --configuration Release
+      - name: Restore + Build
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
 
-      - name: Publish project
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Publish
+        run: dotnet publish -c Release -o ./publish
 
-      - name: Upload publish artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{ env.DOTNET_ROOT }}/myapp
+          name: umbraco_publish
+          path: ./publish
 
   deploy:
     runs-on: windows-latest
@@ -44,14 +42,13 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-          path: ./.net-app   # VERY IMPORTANT – creates the folder that Azure deploy uses
+          name: umbraco_publish
+          path: ./publish   # artefakten hamnar här
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'umbraco-assignment'
           slot-name: 'Production'
-          package: ./.net-app         # THIS MUST MATCH THE DOWNLOAD PATH
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D0AB1443D3D4C8A8C840EF91E1A7889 }}
+          package: ./publish

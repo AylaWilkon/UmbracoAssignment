@@ -29,27 +29,12 @@ if (aspNetCoreEnvironment == "Production")
     }
     
     // Configure media path for Azure
-    // Check for both the correct name and the truncated name (Azure sometimes truncates long variable names)
-    var mediaPathEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath");
-    var mediaPathEnvTruncated = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysic");
-    
+    // Note: UmbracoMediaPhysicalRootPath should be relative, not absolute
+    // We'll ensure the media directory exists, but let Umbraco use its default relative path
     var homePath = Environment.GetEnvironmentVariable("HOME");
     if (!string.IsNullOrWhiteSpace(homePath))
     {
         var mediaFullPath = Path.Combine(homePath, "site", "wwwroot", "wwwroot", "media");
-        
-        // Use the truncated value if it exists, otherwise use the calculated path
-        if (!string.IsNullOrWhiteSpace(mediaPathEnvTruncated))
-        {
-            mediaFullPath = mediaPathEnvTruncated;
-        }
-        else if (!string.IsNullOrWhiteSpace(mediaPathEnv))
-        {
-            mediaFullPath = mediaPathEnv;
-        }
-        
-        // Always set the correct environment variable name
-        Environment.SetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath", mediaFullPath);
         
         // Ensure the media directory exists
         try
@@ -128,29 +113,36 @@ if (builder.Environment.IsProduction())
     }
     
     // Verify media path is set (check both correct and truncated variable names)
+    // Note: UmbracoMediaPhysicalRootPath should be a relative path, not absolute
     var mediaPath = builder.Configuration["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"];
     if (string.IsNullOrWhiteSpace(mediaPath))
     {
         var mediaPathEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath");
         var mediaPathEnvTruncated = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysic");
         
+        // If the path is absolute, convert it to relative or don't set it (let Umbraco use default)
         if (!string.IsNullOrWhiteSpace(mediaPathEnv))
         {
-            productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnv;
+            // If it's an absolute path, don't set it - Umbraco will use default relative path
+            if (!Path.IsPathRooted(mediaPathEnv))
+            {
+                productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnv;
+            }
         }
         else if (!string.IsNullOrWhiteSpace(mediaPathEnvTruncated))
         {
-            productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnvTruncated;
-        }
-        else
-        {
-            var homePath = Environment.GetEnvironmentVariable("HOME");
-            if (!string.IsNullOrWhiteSpace(homePath))
+            // If it's an absolute path, don't set it - Umbraco will use default relative path
+            if (!Path.IsPathRooted(mediaPathEnvTruncated))
             {
-                var mediaFullPath = Path.Combine(homePath, "site", "wwwroot", "wwwroot", "media");
-                productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaFullPath;
+                productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = mediaPathEnvTruncated;
             }
         }
+        // Don't set an absolute path - let Umbraco use its default relative path
+    }
+    else if (Path.IsPathRooted(mediaPath))
+    {
+        // If config has an absolute path, remove it so Umbraco uses default
+        productionOverrides["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"] = null;
     }
     
     // Add overrides to configuration - use AddInMemoryCollection which is the proper way

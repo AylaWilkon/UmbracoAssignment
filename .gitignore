@@ -458,8 +458,8 @@ $RECYCLE.BIN/
 ##
 
 # JSON schema files for appsettings.json
-appsettings-schema.json
-appsettings-schema.*.json
+#appsettings-schema.json
+#appsettings-schema.*.json
 
 # JSON schema file for umbraco-package.json
 umbraco-package-schema.json
@@ -480,5 +480,5 @@ umbraco-package-schema.json
 
 # Media files
 /wwwroot/media/
-/appsettings.Development.json
-/appsettings.json
+#/appsettings.Development.json
+#/appsettings.json

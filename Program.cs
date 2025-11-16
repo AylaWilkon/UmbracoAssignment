@@ -38,6 +38,26 @@ if (builder.Environment.IsProduction())
                 InitialData = overrides 
             });
     }
+    
+    // DIAGNOSTIC: Log where UmbracoMediaPhysicalRootPath is coming from
+    var mediaPathFromConfig = builder.Configuration["Umbraco:CMS:Global:UmbracoMediaPhysicalRootPath"];
+    var mediaPathFromEnv = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysicalRootPath");
+    var mediaPathFromEnvTruncated = Environment.GetEnvironmentVariable("Umbraco__CMS__Global__UmbracoMediaPhysic");
+    
+    Console.WriteLine($"[DIAGNOSTIC] UmbracoMediaPhysicalRootPath from Configuration: '{mediaPathFromConfig}'");
+    Console.WriteLine($"[DIAGNOSTIC] UmbracoMediaPhysicalRootPath from Env Var (full): '{mediaPathFromEnv}'");
+    Console.WriteLine($"[DIAGNOSTIC] UmbracoMediaPhysicalRootPath from Env Var (truncated): '{mediaPathFromEnvTruncated}'");
+    
+    // Log all Umbraco-related environment variables
+    var allEnvVars = Environment.GetEnvironmentVariables();
+    foreach (var key in allEnvVars.Keys)
+    {
+        var keyStr = key.ToString();
+        if (keyStr != null && keyStr.Contains("Umbraco", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine($"[DIAGNOSTIC] Env Var: {keyStr} = '{allEnvVars[key]}'");
+        }
+    }
 }
 
 builder.CreateUmbracoBuilder()
